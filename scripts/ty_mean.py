@@ -1,3 +1,4 @@
+"""create typical year forecast using the mean as the statistic"""
 import pathlib
 
 import matplotlib.pyplot as plt
@@ -19,17 +20,13 @@ if __name__ == "__main__":
     data = data.rename({"RRP": "price"}, axis=1)
     sns.set_context(rc={"font.size": 12, "axes.titlesize": 12, "axes.labelsize": 12})
 
-    """
-    January example
-    """
+    #  January example
     jan = typical(data, "mean", 1)
     table = pathlib.Path("./tables/table2.md")
     print(f"writing to {table}")
     table.write_text(jan.drop("month-int", axis=1).to_markdown(index=False))
 
-    """
-    all years
-    """
+    #  run over all months
     samples = []
     forecasts = []
     months = data.index.month.unique().sort_values()
@@ -54,9 +51,7 @@ if __name__ == "__main__":
     print(f"writing to {table}")
     table.write_text(samples.to_markdown(index=False))
 
-    """
-    plot forecast
-    """
+    #  plot forecast
     forecasts = pd.concat(forecasts, axis=0)
     forecasts.to_parquet("./data/tmy-forecast.parquet")
     f, ax = plt.subplots(figsize=(12, 0.8 * 4.8))
@@ -72,9 +67,7 @@ if __name__ == "__main__":
     print(f"plot to {out}")
     f.savefig(out)
 
-    """
-    plot forecast versus all years
-    """
+    #  plot forecast versus all years
     years = data.index.year.unique().sort_values()
     f, axes = plt.subplots(
         nrows=years.shape[0], figsize=(12, 3 * 4.8), sharex=True, sharey=True

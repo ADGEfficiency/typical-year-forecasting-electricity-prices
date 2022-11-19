@@ -1,3 +1,4 @@
+"""creates the motivation and solution figures + tables"""
 import pathlib
 
 import matplotlib.pyplot as plt
@@ -12,6 +13,7 @@ from ty.util import get_plot_base
 def project_savings(
     price: float, savings_mwh: float = 150, years: int = 4
 ) -> pd.DataFrame:
+    """simple technical + economic model of energy project"""
     data = pd.DataFrame(
         {
             "year": list(range(years)),
@@ -26,6 +28,7 @@ def project_savings(
 
 
 def plot_project_savings(ds):
+    """creates figure showing project savings versus assumed prices"""
     ds = ds.sort_values("cumulative_savings_$")
     print(ds)
     f, ax = plt.subplots(figsize=[2 * 6.4, 1 * 4.8])
@@ -57,18 +60,13 @@ if __name__ == "__main__":
     base = get_plot_base(args.plot_mode)
     pathlib.Path("./tables").mkdir(exist_ok=True)
 
-    """
-    table of project economics for a single year
-    """
+    #  table of project economics for a single year
     economics = project_savings(price=100)
-
     table = pathlib.Path("./tables/table0.md")
     print(f"writing to {table}")
     table.write_text(economics.to_markdown())
 
-    """
-    calculate project economics for different average prices
-    """
+    #  calculate project economics for different average prices
     economics_agg = {
         "year": "mean",
         "capex": "sum",
@@ -98,6 +96,7 @@ if __name__ == "__main__":
     print(f"plot to {out}")
     f.savefig(out)
 
+    #  compare with the typical year forecast price
     forecast = pd.read_parquet("./data/tmy-forecast.parquet")
     ty_mean = forecast["price"].mean()
     ty_economics = project_savings(ty_mean)

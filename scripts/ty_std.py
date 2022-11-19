@@ -1,3 +1,4 @@
+"""create typical year forecast using the mean & standard deviation as the statistic"""
 import pathlib
 
 import matplotlib.pyplot as plt
@@ -12,6 +13,7 @@ from ty.util import get_plot_base
 
 
 def typical_month_mean_std(data: pd.DataFrame, month: int) -> pd.DataFrame:
+    """create typical year forecast using two statistics"""
     means = typical(data, "mean", month)
     stds = typical(data, "std", month)
     ds = means.merge(stds)
@@ -26,14 +28,7 @@ if __name__ == "__main__":
     data = data.rename({"RRP": "price"}, axis=1)
     sns.set_context(rc={"font.size": 14, "axes.titlesize": 14, "axes.labelsize": 14})
 
-    """
-    just do all years at once
-
-    make the table
-
-    then plot the two forecasts on top of each other
-    """
-
+    #  run over all months
     samples = []
     forecasts = []
     months = data.index.month.unique().sort_values()
@@ -66,10 +61,7 @@ if __name__ == "__main__":
     print(f"writing to {table}")
     table.write_text(samples.to_markdown(index=False))
 
-    """
-    let's grab the interval data and plot
-    """
-
+    #  plot forecast
     forecasts = pd.concat(forecasts, axis=0)
     f, ax = plt.subplots(
         figsize=(12, 0.8 * 1.5 * 4.8), nrows=2, sharex=True, sharey=True
