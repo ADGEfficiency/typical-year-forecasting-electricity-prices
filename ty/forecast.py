@@ -2,9 +2,10 @@ import pandas as pd
 
 
 def typical(raw: pd.DataFrame, statistic: str, month: int):
-
+    """create a typical year forecast from a single statistic"""
+    #  filter on the month we want
     subset = raw[raw.index.month == month]
-
+    #  calculate long term statistic
     long_term_statistic = subset["price"].agg(statistic)
 
     #  groupby year and apply our statistic

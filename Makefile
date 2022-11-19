@@ -13,6 +13,6 @@ setup:
 	poetry install
 
 fc: setup
-	python ty_mean.py --plot-mode $(PLOT-MODE)
-	python motivation.py --plot-mode $(PLOT-MODE)
-	python ty_std.py --plot-mode $(PLOT-MODE)
+	python ./scripts/ty_mean.py --plot-mode $(PLOT-MODE)
+	python ./scripts/motivation.py --plot-mode $(PLOT-MODE)
+	python ./scripts/ty_std.py --plot-mode $(PLOT-MODE)
