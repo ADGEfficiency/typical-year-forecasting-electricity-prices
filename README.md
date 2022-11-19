@@ -1,6 +1,11 @@
 # Typical Year Forecasting of South Australian Electricity Prices
 
-Supporting code for the blog post [Typical Year Forecasting of Electricity Prices](https://adgefficiency.com/typical-year-electricity-price-forecasting/).
+Supporting code for the blog post [Typical Year Forecasting of Electricity Prices](https://adgefficiency.com/typical-year-forecasting-electricity-prices/).
+
+![Comparison of the typical year forecast (2052) versus historical prices.](./figs/f5.png)
+<center>
+<em>Comparison of the typical year forecast (2052) versus historical prices.</em>
+</center>
 
 ## Use
 
