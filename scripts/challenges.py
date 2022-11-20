@@ -12,7 +12,8 @@ if __name__ == "__main__":
             "price",
         ],
     ]
-    subset["day-of-week"] = subset["original-timestamps"].dt.day_of_week
+    subset["day-of-week-forecast"] = subset.index.day_of_week
+    subset["day-of-week-original"] = subset["original-timestamps"].dt.day_of_week
     table = pathlib.Path("./tables/table5.md")
     print(f"writing to {table}")
     table.write_text(subset.reset_index().to_markdown(index=False))
