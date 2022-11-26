@@ -7,7 +7,7 @@ Supporting code for the blog post [Typical Year Forecasting of Electricity Price
 
 ## Use
 
-Data for the analysis is included as a single parquet file in `./data/trading-price.parquet`.
+Data for the analysis is included as a single Parquet file in `./data/trading-price.parquet`.
 
 You can reproduce the analysis by running the `make` command below (you will need Python 3.10 or above):
 
@@ -15,4 +15,4 @@ You can reproduce the analysis by running the `make` command below (you will nee
 $ make
 ```
 
-This will install Python dependencies with Poetry and run three Python scripts, which creates figures, tables and a Parquet forecast.
+This will install Python dependencies with Poetry and run three Python scripts, which creates figures, tables and a typical year forecast as a Parquet file `./data/tmy-forecast.parquet`.

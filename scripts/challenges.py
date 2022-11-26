@@ -3,6 +3,7 @@ import pathlib
 
 import pandas as pd
 
+
 if __name__ == "__main__":
     data = pd.read_parquet("./data/tmy-forecast.parquet")
     subset = data.loc[
