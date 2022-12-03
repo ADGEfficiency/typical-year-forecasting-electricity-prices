@@ -12,13 +12,14 @@ from ty.forecast import typical
 from ty.util import get_plot_base
 
 if __name__ == "__main__":
+    sns.set_context(rc={"font.size": 12, "axes.titlesize": 12, "axes.labelsize": 12})
+
     args = cli()
     base = get_plot_base(args.plot_mode)
     pathlib.Path("./tables").mkdir(exist_ok=True)
 
     data = load_prices()
     data = data.rename({"RRP": "price"}, axis=1)
-    sns.set_context(rc={"font.size": 12, "axes.titlesize": 12, "axes.labelsize": 12})
 
     #  January example
     jan = typical(data, "mean", 1)

@@ -27,13 +27,13 @@ def project_savings(
     return data
 
 
-def plot_project_savings(ds):
+def plot_project_savings(
+    ds: pd.DataFrame, include_project_text: bool = True, include_tmy_text: bool = False
+) -> plt.Figure:
     """creates figure showing project savings versus assumed prices"""
     ds = ds.sort_values("cumulative_savings_$")
     print(ds)
-    f, ax = plt.subplots(figsize=[2 * 6.4, 1 * 4.8])
-
-    # ds["year"] = ds["year"].apply(lambda x: "typical" if x == 2052 else x)
+    f, ax = plt.subplots(figsize=[1.8 * 6.4, 0.8 * 4.8], dpi=250)
 
     colors = ["red" if x < 0 else "blue" for x in ds["cumulative_savings_$"].values]
     colors = ["green" if year == 2052 else c for c, year in zip(colors, ds["year"])]
@@ -49,13 +49,42 @@ def plot_project_savings(ds):
     )
 
     ax.set_ylabel("Cumulative Savings $")
-    ax.set_xlabel("Average Annual Price $/MWh")
+    ax.set_xlabel("Average Annual Price $/MWh\nYear")
+    losers = list(
+        sorted(ds[ds["cumulative_savings_$"] < 0]["year"].values.astype(int).tolist())
+    )
+    losers = ", ".join([str(l) for l in losers[:-1]]) + f" & {losers[-1]}"
+    winners = list(
+        sorted(ds[ds["cumulative_savings_$"] > 0]["year"].values.astype(int).tolist())
+    )
+    winners = ", ".join([str(l) for l in winners[:-1]]) + f" & {winners[-1]}"
+
+    if include_project_text:
+        ax.text(0.3, 20000, f"Projects in {losers} lose money", fontsize=10)
+        ax.text(5, -20000, f"Projects in {winners} make money", fontsize=10)
+
+    if include_tmy_text:
+        ax.annotate(
+            "Wow!",
+            xy=(5.0, 3000),
+            xytext=(4.4, 20000),
+            arrowprops={
+                "arrowstyle": "simple",
+                "edgecolor": "black",
+                "facecolor": "black",
+            },
+            va="center",
+            style="italic",
+            fontsize=18,
+        )
 
     plt.tight_layout()
     return f
 
 
 if __name__ == "__main__":
+    sns.set_context(rc={"font.size": 10, "axes.titlesize": 10, "axes.labelsize": 10})
+
     args = cli()
     base = get_plot_base(args.plot_mode)
     pathlib.Path("./tables").mkdir(exist_ok=True)
@@ -105,7 +134,7 @@ if __name__ == "__main__":
 
     ds = pd.concat(projects, axis=1).T
     ds = ds.sort_values("cumulative_savings_$")
-    f = plot_project_savings(ds)
+    f = plot_project_savings(ds, include_project_text=False, include_tmy_text=True)
 
     out = base / "f5.png"
     print(f"plot to {out}")
