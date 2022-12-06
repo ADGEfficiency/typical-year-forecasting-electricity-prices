@@ -14,7 +14,7 @@ def load_prices():
         return pd.read_parquet(cache)
 
     print(f"loading from nemdata")
-    data = loader("trading-price")["trading-price"]
+    data = loader(desired_reports=["trading-price"])["trading-price"]
     data = data.set_index("interval-start")
 
     region = "SA1"
