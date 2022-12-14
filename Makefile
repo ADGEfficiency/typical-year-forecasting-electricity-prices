@@ -1,4 +1,5 @@
-.PHONY: setup-scratch setup fc
+.PHONY: all setup-scratch setup fc
+
 all: fc
 
 setup:
@@ -6,7 +7,7 @@ setup:
 	poetry install -q
 
 setup-scratch: setup
-	nemdata -r trading-price -s 2012-01 -e 2021-12
+	nemdata -t trading-price -s 2012-01 -e 2021-12
 	python ./ty/data.py
 
 #  small hack to allow me to save plots to my blog post folder directly

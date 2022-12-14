@@ -1,4 +1,4 @@
-# Typical Year Forecasting of South Australian Electricity Prices
+# Typical Year Forecasting of Electricity Prices
 
 Supporting code for the blog post [Typical Year Forecasting of Electricity Prices](https://adgefficiency.com/typical-year-forecasting-electricity-prices/).
 

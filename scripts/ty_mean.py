@@ -46,7 +46,7 @@ if __name__ == "__main__":
         forecasts.append(forecast)
 
     samples = pd.concat(samples, axis=1).T
-    samples = samples[["month", "year", "price-mean", "long-term-mean", "error-mean"]]
+    samples = samples[["year", "month", "price-mean", "long-term-mean", "error-mean"]]
 
     table = pathlib.Path("./tables/table3.md")
     print(f"writing to {table}")
